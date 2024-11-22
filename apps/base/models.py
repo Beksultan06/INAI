@@ -1,6 +1,9 @@
 from django.db import models
 from apps.base.constant import STATUS_CHOICES
 from apps.users.models import User
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
 
 class Product(models.Model):
     title = models.CharField(
@@ -112,6 +115,21 @@ class ExtendedOrder(Order):
 
     def __str__(self):
         return f"{self.courier} несёт товар {self.client}"
+
+    def update_status(self, new_status):
+        """Обновление статуса заказа и отправка уведомления через WebSocket."""
+        self.status = new_status
+        self.save()
+
+        # Уведомление через WebSocket
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'order_{self.id}',
+            {
+                'type': 'order_status_update',
+                'message': f'Статус заказа обновлён: {self.status}'
+            }
+        )
 
     class Meta:
         verbose_name_plural = 'Расширенный заказ'

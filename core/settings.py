@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.users',
+    'apps.users', 
     'apps.base',
     'apps.planning',
+    'apps.websocket',
 
     'rest_framework',
     'rest_framework_simplejwt',
@@ -49,6 +50,14 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
 ]
+
+ASGI_APPLICATION = 'core.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

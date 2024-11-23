@@ -1,0 +1,106 @@
+<div class="content">
+    <h2>Заказ доставки родному/знакомому</h2>
+    <form action="#" method="post" class="order-form">
+        <div class="form-group">
+            <label for="delivery-address">Адрес доставки:</label>
+            <input type="text" id="delivery-address" name="delivery-address" placeholder="Введите адрес доставки" required>
+        </div>
+
+        <div class="form-group">
+            <label for="delivery-time">Время доставки:</label>
+            <select id="delivery-time" name="delivery-time">
+                <option value="now">Сейчас</option>
+                <option value="later">Выбрать время и дату</option>
+            </select>
+        </div>
+
+        <!-- Поля для выбора даты и времени -->
+        <div class="form-group" id="datetime-picker" style="display:none;">
+            <label for="delivery-date-time">Дата и время доставки:</label>
+            <input type="datetime-local" id="delivery-date-time" name="delivery-date-time">
+        </div>
+
+        <div class="form-group">
+            <label for="item-type">Тип вещи:</label>
+            <select id="item-type" name="item-type">
+                <option value="perishable">Скоропортящаяся</option>
+                <option value="semi-perishable">Медленно портящаяся</option>
+                <option value="non-perishable">Непортящаяся</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="payment-method">Способ оплаты:</label>
+            <select id="payment-method" name="payment-method">
+                <option value="card">Карта</option>
+                <option value="e-wallet">Электронный кошелек</option>
+                <option value="cash">Наличные</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="promo-code">Промокод:</label>
+            <input type="text" id="promo-code" name="promo-code" placeholder="Введите промокод (если есть)">
+        </div>
+
+        <button type="submit" class="btn-submit">Подтвердить заказ</button>
+    </form>
+</div>
+
+<!-- Стили для улучшения оформления -->
+<style>
+    .order-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        color: #3D348B;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .btn-submit {
+        padding: 12px;
+        background-color: #3D348B;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-submit:hover {
+        background-color: #2a2572;
+    }
+
+    h2 {
+        color: #3D348B;
+        margin-bottom: 20px;
+    }
+</style>
+<script>
+    document.getElementById('delivery-time').addEventListener('change', function () {
+        const datetimePicker = document.getElementById('datetime-picker');
+        if (this.value === 'later') {
+            datetimePicker.style.display = 'block';
+        } else {
+            datetimePicker.style.display = 'none';
+        }
+    });
+</script>

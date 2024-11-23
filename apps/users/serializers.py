@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Kura
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +30,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if len(attrs['password']) < 8:
             raise serializers.ValidationError({'password': "Минимум 8 символов"})
         return attrs
+
+class KuraSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Kura
+        fields = ['fio', 'about_me', 'photo1', 'photo2']
+
+    def validate(self, attrs):
+        if not attrs.get('photo1') or not attrs.get('photo2'):
+            raise serializers.ValidationError({'files': 'Все файлы должны быть загружены.'})

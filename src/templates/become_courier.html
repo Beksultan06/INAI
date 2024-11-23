@@ -1,0 +1,149 @@
+{% extends  'homepage.html' %}
+
+<div class="content">
+    <h2>Стать курьером</h2>
+
+    <!-- Форма подачи заявки на курьера -->
+    <form id="courier-form" method="post" enctype="multipart/form-data" onsubmit="showThankYouPopup(event)">
+        <div class="form-group">
+            <label for="full-name">ФИО</label>
+            <input type="text" id="full-name" name="full_name" required placeholder="Введите ваше ФИО">
+        </div>
+        <div class="form-group">
+            <label for="phone-number">Номер телефона</label>
+            <input type="tel" id="phone-number" name="phone_number" required placeholder="Введите ваш номер телефона">
+        </div>
+        <div class="form-group">
+            <label for="about-yourself">Расскажите о себе</label>
+            <textarea id="about-yourself" name="about_yourself" required placeholder="Напишите немного о себе"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="passport-front">Загрузите первую сторону паспорта</label>
+            <input type="file" id="passport-front" name="passport_front" accept="image/*" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="passport-back">Загрузите вторую сторону паспорта</label>
+            <input type="file" id="passport-back" name="passport_back" accept="image/*" required>
+        </div>
+        
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="age-confirmation" name="age_confirmation" required>
+                Я подтверждаю, что мне есть 18 лет.
+            </label>
+        </div>
+        
+        <button type="submit" class="submit-button">Отправить заявку</button>
+    </form>
+    <style>
+        .content {
+            padding: 20px;
+            color: #3D348B;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .submit-button {
+            background-color: #3D348B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background-color: #2a1f6b;
+        }
+
+        .form-group input[type="file"] {
+            padding: 5px;
+        }
+
+        /* Стили для popup */
+        #thank-you-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .popup-content button {
+            margin-top: 20px;
+            background-color: #3D348B;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup-content button:hover {
+            background-color: #2a1f6b;
+        }
+    </style>
+
+    <!-- Popup -->
+    <div id="thank-you-popup">
+        <div class="popup-content">
+            <h3>Спасибо! Мы с вами свяжемся.</h3>
+            <button onclick="closePopup()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Скрипт -->
+    <script>
+        function showThankYouPopup(event) {
+            event.preventDefault(); // Предотвращает отправку формы
+            document.getElementById('thank-you-popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('thank-you-popup').style.display = 'none';
+        }
+    </script>
+</div>

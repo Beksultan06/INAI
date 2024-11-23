@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnoiDostavka - Регистрация</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .landing-page {
+            background-image: url('../templates/background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #d7fc69;
+        }
+
+        .registration-form {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .registration-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .registration-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d7fc69;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .registration-form button:hover {
+            background-color: #3D348B;
+            color: #fff;
+        }
+
+        .registration-form .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .registration-form .login-link a {
+            color: #d7fc69;
+            text-decoration: none;
+        }
+
+        .registration-form .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <div class="logo">
+            <img src="../logo.png" alt="OnoiDostavka Logo" style="height: 60px;">
+        </div>
+        <div class="registration-form">
+            <h2>Регистрация</h2>
+            <form id="registration-form">
+                <input type="text" id="username" placeholder="Имя" required>
+                <input type="email" id="email" placeholder="Электронная почта" required>
+                <input type="tel" id="phone_number" placeholder="Номер телефона" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <input type="password" id="confirm_password" placeholder="Подтвердите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+            <div class="login-link">
+                <p>Уже есть аккаунт? <a href="/login/">Войти</a></p>
+            </div>
+            <div id="message" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Логика отправки данных формы на сервер
+        document.getElementById('registration-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const messageBox = document.getElementById('message');
+    messageBox.textContent = '';
+
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const phone_number = document.getElementById('phone_number').value;
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirm_password').value;
+
+try {
+    const response = await fetch('http://127.0.0.1:8000/api/v1/users/create-users/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username,
+            email,
+            phone_number,
+            password,
+            confirm_password
+        })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        messageBox.textContent = 'Регистрация прошла успешно!';
+        messageBox.className = 'success-message';
+        setTimeout(() => {
+            window.location.href = '/login/';
+        }, 2000);
+    } else {
+        messageBox.textContent = data.detail || 'Ошибка регистрации';
+        messageBox.className = 'error-message';
+    }
+} catch (error) {
+    messageBox.textContent = 'Ошибка подключения. Попробуйте позже.';
+    messageBox.className = 'error-message';
+}
+});
+
+    </script>
+</body>
+</html>

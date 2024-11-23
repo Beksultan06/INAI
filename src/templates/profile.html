@@ -1,0 +1,106 @@
+<div class="profile-container">
+    <h2>Личный кабинет</h2>
+    <form class="profile-form">
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" value="Ваше Имя" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="example@email.com" required>
+        <button type="button" class="verify-button" onclick="sendEmailCode()">Подтвердить Email</button>
+        <input type="text" id="email-code" name="email-code" placeholder="Код из Email" style="display: none;">
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Номер телефона</label>
+        <input type="tel" id="phone" name="phone" value="+7 (999) 999-99-99" required>
+        <button type="button" class="verify-button" onclick="sendPhoneCode()">Подтвердить телефон</button>
+        <input type="text" id="phone-code" name="phone-code" placeholder="Код из SMS" style="display: none;">
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Домашний адрес</label>
+        <input type="text" id="address" name="address" value="ул. Примерная, д. 10" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="old-password">Старый пароль</label>
+        <input type="password" id="old-password" name="old-password" placeholder="Введите старый пароль" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="new-password">Новый пароль</label>
+        <input type="password" id="new-password" name="new-password" placeholder="Введите новый пароль">
+      </div>
+  
+      <div class="form-group">
+        <label for="confirm-password">Подтвердите пароль</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Подтвердите новый пароль">
+      </div>
+  
+      <button type="submit" class="save-button">Сохранить изменения</button>
+    </form>
+    <style>
+        .profile-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-form .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .profile-form label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: bold;
+    }
+    
+    .profile-form input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .verify-button {
+      background-color: #d7fc69;
+      color: #3D348B;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: block;
+    }
+    
+    .verify-button:hover {
+      background-color: #3D348B;
+      color: white;
+    }
+    
+    .save-button {
+      background-color: #3D348B;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    
+    .save-button:hover {
+      background-color: #d7fc69;
+      color: #3D348B;
+    }
+    
+    </style>  
+</div>

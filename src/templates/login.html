@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnoiDostavka - Вход</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .landing-page {
+            background-image: url('../templates/background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #d7fc69;
+        }
+
+        .login-form {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d7fc69;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-form button:hover {
+            background-color: #3D348B;
+            color: #fff;
+        }
+
+        .login-form .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .login-form .register-link a {
+            color: #d7fc69;
+            text-decoration: none;
+        }
+
+        .login-form .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <div class="logo">
+            <img src="../logo.png" alt="OnoiDostavka Logo" style="height: 60px;">
+        </div>
+        <div class="login-form">
+            <h2>Вход</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Имя пользователя" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+            <div class="register-link">
+                <p>Нет аккаунта? <a href="/register/">Регистрация</a></p>
+            </div>
+            <div id="message" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Логика отправки данных формы на сервер
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const messageBox = document.getElementById('message');
+            messageBox.textContent = '';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/v1/users/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Сохраняем токен в localStorage
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+
+                    messageBox.textContent = 'Вход выполнен успешно!';
+                    messageBox.className = 'success-message';
+
+                    // Перенаправление на главную страницу
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    messageBox.textContent = data.detail || 'Ошибка входа';
+                    messageBox.className = 'error-message';
+                }
+            } catch (error) {
+                messageBox.textContent = 'Ошибка подключения. Попробуйте позже.';
+                messageBox.className = 'error-message';
+            }
+        });
+    </script>
+</body>
+</html>
